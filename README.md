@@ -76,6 +76,7 @@ rover -lz /tf/caf/landingzones/launchpad -a plan -launchpad
 - 🤝 **[Contributing](CONTRIBUTING.md)** - Developer guidelines and setup
 - 🔒 **[Security](docs/SECURITY.md)** - Security best practices
 - 🐛 **[Troubleshooting](docs/TROUBLESHOOTING.md)** - Common issues and solutions
+- ❓ **[FAQ](docs/FAQ.md)** - Frequently asked questions
 
 ### Getting Started with CAF Terraform Landing Zones
 
