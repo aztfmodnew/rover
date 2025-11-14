@@ -121,6 +121,7 @@ function build_base_rover_image {
                 -f docker-bake.hcl \
                 -f docker-bake.override.hcl \
                 --set *.platform=${os}/${architecture} \
+                --allow=fs=/tmp \
                 --push rover_local
             # Pull from in-memory local registry to local docker images
             docker pull --platform ${os}/${architecture} ${rover}
@@ -135,6 +136,7 @@ function build_base_rover_image {
                 -f docker-bake.hcl \
                 -f docker-bake.override.hcl \
                 --set *.platform=${os}/${architecture} \
+                --allow=fs=/tmp \
                 --push rover_registry
             ;;
         *)
@@ -146,6 +148,7 @@ function build_base_rover_image {
             docker buildx bake \
                 -f docker-bake.hcl \
                 -f docker-bake.override.hcl \
+                --allow=fs=/tmp \
                 --push rover_registry
             ;;
     esac
@@ -185,7 +188,7 @@ function build_rover_agents {
             platform="${architecture}"
             rover_agents="${rover_agents}"
 
-            registry="" \
+            registry="${registry}" \
             tag_strategy=${tag_strategy} \
             versionRover="${rover_base}:${tag}" \
             versionTerraform=${versionTerraform} \
@@ -194,6 +197,7 @@ function build_rover_agents {
                 -f docker-bake-agents.hcl \
                 -f docker-bake.override.hcl \
                 --set *.platform=${os}/${platform} \
+                --allow=fs=/tmp \
                 --load ${rover_agents}
 
             echo "Agents created under tag ${registry}rover-agent:${tag}-${tag_strategy}${rover_agents} for registry '${registry}'"
@@ -210,6 +214,7 @@ function build_rover_agents {
             docker buildx bake \
                 -f docker-bake-agents.hcl \
                 -f docker-bake.override.hcl \
+                --allow=fs=/tmp \
                 --push rover_agents
 
             echo "Agents created under tag ${registry}rover-agent:${tag}-${tag_strategy}* for registry '${registry}'"
@@ -224,6 +229,7 @@ function build_rover_agents {
             docker buildx bake \
                 -f docker-bake-agents.hcl \
                 -f docker-bake.override.hcl \
+                --allow=fs=/tmp \
                 --push gitlab
 
             echo "Agents created under tag ${registry}rover-agent:${tag}-${tag_strategy}* for registry '${registry}'"
@@ -238,6 +244,7 @@ function build_rover_agents {
             docker buildx bake \
                 -f docker-bake-agents.hcl \
                 -f docker-bake.override.hcl \
+                --allow=fs=/tmp \
                 --push rover_agents
 
             echo "Agents created under tag ${registry}rover-agent:${tag}-${tag_strategy}* for registry '${registry}'"
