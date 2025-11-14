@@ -1,6 +1,6 @@
 # Updating the Dev Container
 
-The dev container in this repo uses docker compose and an image hosted on dockerhub (aztfmod/rover:tag).
+The dev container in this repo uses docker compose and an image hosted on dockerhub (aztfmodnew/rover:tag).
 
 If you would like to make changes to the base image used by the dev container, you need to build the image then update the docker-compose.yml file to point to the newly created local image.
 
@@ -8,16 +8,16 @@ If you would like to make changes to the base image used by the dev container, y
 
 * Modify [Dockerfile](../Dockerfile) with the desired changed.
 * From the root of the repository execute `make dev`
-* The script should build a local image, but fail to push to DockerHub (since aztfmod/rover requires credentials a docker login.) . This isn't a problem, as we can modify your local set up to use a local image, rather than one on DockerHub.
+* The script should build a local image, but fail to push to DockerHub (since aztfmodnew/rover requires credentials a docker login.) . This isn't a problem, as we can modify your local set up to use a local image, rather than one on DockerHub.
 * In the build log note the line with the updated image name and tag. It will be something along the lines of
 
   ```shell
-  Pushing rover_registry (aztfmod/rover-preview:0.13.6-2103.211716)...
+  Pushing rover_registry (aztfmodnew/rover-preview:0.13.6-2103.211716)...
   ```
 
 ## 2) Update the Docker Compose File
 
-* Copy the name and tag in parenthesis (in this case aztfmod/rover-preview:0.13.6-2103.211716)
+* Copy the name and tag in parenthesis (in this case aztfmodnew/rover-preview:0.13.6-2103.211716)
 * Open [.devcontainer/docker-compose.yml](../.devcontainer/docker-compose.yml) and update the image property to the value from the log (note your version will be different from below).
 
   In addition, bump the version number after the decimal point. (eg. 3.7 -> 3.8)
@@ -58,5 +58,3 @@ If you have previously launched the devconatiner, your home folder will be mappe
 
 * Open the repo in VS Code.
 * Using the keyboard shortcut ctl-shit-p, select Rebuild and Reopen in Container.
-
-

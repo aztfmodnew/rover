@@ -7,7 +7,7 @@
 version: "3.7"
 services:
   rover:
-    image: aztfmod/rover:1.7.4-2402.2908
+    image: aztfmodnew/rover:1.7.4-2402.2908
     user: vscode
 
     labels:
@@ -29,7 +29,7 @@ services:
     command: /bin/sh -c "while sleep 1000; do :; done"
 
   # rover_ssh:
-  #   image: aztfmod/rover:1.1.6-2202.2503
+  #   image: aztfmodnew/rover:1.1.6-2202.2503
   #   user: vscode
 
   #   labels:

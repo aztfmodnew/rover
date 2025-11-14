@@ -1,6 +1,6 @@
-![](https://github.com/aztfmod/rover/workflows/master/badge.svg)
-![](https://github.com/aztfmod/rover/workflows/.github/workflows/ci-branches.yml/badge.svg)
-[![Gitter](https://badges.gitter.im/aztfmod/community.svg)](https://gitter.im/aztfmod/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+![](https://github.com/aztfmodnew/rover/workflows/master/badge.svg)
+![](https://github.com/aztfmodnew/rover/workflows/.github/workflows/ci-branches.yml/badge.svg)
+[![Gitter](https://badges.gitter.im/aztfmodnew/community.svg)](https://gitter.im/aztfmodnew/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 # Azure Terraform SRE - Landing zones on Terraform - Rover
 
@@ -24,8 +24,8 @@ The CAF **rover** is helping you managing your enterprise Terraform deployments 
 
 The rover is available from the Docker Hub in form of:
 
-- [Standalone edition](https://hub.docker.com/r/aztfmod/rover/tags?page=1&ordering=last_updated): to be used for landing zones engineering or pipelines.
-- [Adding runner (agent) for the following platforms](https://hub.docker.com/r/aztfmod/rover-agent/tags?page=1&ordering=last_updated)
+- [Standalone edition](https://hub.docker.com/r/aztfmodnew/rover/tags?page=1&ordering=last_updated): to be used for landing zones engineering or pipelines.
+- [Adding runner (agent) for the following platforms](https://hub.docker.com/r/aztfmodnew/rover-agent/tags?page=1&ordering=last_updated)
   - Azure DevOps
   - GitHub Actions
   - Gitlab
@@ -42,7 +42,7 @@ Feel free to open an issue for feature or bug, or to submit a PR.
 
 In case you have any question, you can reach out to tf-landingzones at microsoft dot com.
 
-You can also reach us on [Gitter](https://gitter.im/aztfmod/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+You can also reach us on [Gitter](https://gitter.im/aztfmodnew/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ## Contributing
 
