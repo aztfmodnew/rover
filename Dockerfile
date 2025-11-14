@@ -103,13 +103,12 @@ RUN apt-get update && \
     #
     # ############### APT Repositories ###################
     #
-    # Add Microsoft key
+    # Add Microsoft key and repository
     #
-    curl -sSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.gpg && \
-    #
-    # Add Microsoft repository
-    #
-    gosu root apt-add-repository https://packages.microsoft.com/ubuntu/22.04/prod && \
+    curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /tmp/microsoft.gpg && \
+    install -o root -g root -m 644 /tmp/microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
+    echo "deb [arch=amd64] https://packages.microsoft.com/ubuntu/22.04/prod jammy main" > /etc/apt/sources.list.d/microsoft-prod.list && \
+    rm /tmp/microsoft.gpg && \
     #
     # Add Docker repository
     #
