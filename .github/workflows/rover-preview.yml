@@ -28,6 +28,7 @@ jobs:
     - name: Build the rover
       run: |
         set -e
+        export BUILDX_BAKE_ENTITLEMENTS_FS=0
         # Build the rover base image
         make github
 
