@@ -58,8 +58,7 @@ WORKDIR /tf/rover
 COPY ./scripts/.kubectl_aliases .
 COPY ./scripts/zsh-autosuggestions.zsh .
     # installation common tools
-RUN set -e && \
-    apt-get update && \
+RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     apt-transport-https \
     apt-utils \
