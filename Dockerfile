@@ -105,21 +105,21 @@ RUN apt-get update && \
     #
     # Add Microsoft key and repository
     #
-    curl -sSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/microsoft.gpg  && \
+    curl -sSL --retry 3 --retry-delay 2 https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/microsoft.gpg  && \
     echo "deb [arch=${TARGETARCH} signed-by=/etc/apt/trusted.gpg.d/microsoft.gpg] https://packages.microsoft.com/ubuntu/22.04/prod jammy main" | gosu root tee /etc/apt/sources.list.d/microsoft-prod.list && \
     #
     # Add Docker repository
     #
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg && \
+    curl -fsSL --retry 3 --retry-delay 2 https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg && \
     echo "deb [arch=${TARGETARCH} signed-by=/etc/apt/trusted.gpg.d/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu jammy stable" | gosu root tee /etc/apt/sources.list.d/docker.list && \
     #
     # Kubernetes repo
     #
-    curl -fsSL https://pkgs.k8s.io/core:/stable:/v${versionKubectl}/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
+    curl -fsSL --retry 3 --retry-delay 2 https://pkgs.k8s.io/core:/stable:/v${versionKubectl}/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
     echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v${versionKubectl}/deb/ /" | gosu root tee /etc/apt/sources.list.d/kubernetes.list && \
     #
     # Github shell
-    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | gosu root dd of=/etc/apt/trusted.gpg.d/githubcli-archive-keyring.gpg && \
+    curl -fsSL --retry 3 --retry-delay 2 https://cli.github.com/packages/githubcli-archive-keyring.gpg | gosu root dd of=/etc/apt/trusted.gpg.d/githubcli-archive-keyring.gpg && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/trusted.gpg.d/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null &&\
     #
     apt-get update && \
