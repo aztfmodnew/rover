@@ -16,7 +16,7 @@ jobs:
     - name: Docker Hub Login
       uses: docker/login-action@v3
       with:
-          username: ${{ secrets.docker_user }}
+          username: aztfmodnew
           password: ${{ secrets.docker_registry_password }}
     # - name: Cache Docker layers
     #   uses: actions/cache@v2
