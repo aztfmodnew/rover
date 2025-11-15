@@ -105,13 +105,13 @@ RUN apt-get update && \
     #
     # Add Microsoft key and repository
     #
-    curl -sSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null && \
+    curl -sSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/microsoft.gpg  && \
     echo "deb [arch=${TARGETARCH} signed-by=/etc/apt/trusted.gpg.d/microsoft.gpg] https://packages.microsoft.com/ubuntu/22.04/prod jammy main" | gosu root tee /etc/apt/sources.list.d/microsoft-prod.list && \
     #
     # Add Docker repository
     #
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg && \
-    echo "deb [arch=${TARGETARCH}] https://download.docker.com/linux/ubuntu jammy stable" | gosu root tee /etc/apt/sources.list.d/docker.list && \
+    echo "deb [arch=${TARGETARCH} signed-by=/etc/apt/trusted.gpg.d/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu jammy stable" | gosu root tee /etc/apt/sources.list.d/docker.list && \
     #
     # Kubernetes repo
     #
