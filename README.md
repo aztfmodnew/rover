@@ -31,6 +31,69 @@ The rover is available from the Docker Hub in form of:
   - Gitlab
   - Terraform Cloud/Terraform Enterprise
 
+## 📦 Installed Tools and Versions
+
+### Base System
+| Component | Version | Notes |
+|-----------|---------|-------|
+| **Base OS** | Ubuntu 24.04 LTS (Noble) | Python 3.12, Long-term support until 2029 |
+| **Shell** | bash + zsh (Oh My Zsh) | Interactive development environment |
+
+### Core DevOps Tools
+| Tool | Version | Purpose |
+|------|---------|----------|
+| **Terraform** | Latest | Infrastructure as Code |
+| **Azure CLI** | Latest | Azure management |
+| **kubectl** | 1.34.2 | Kubernetes management |
+| **Helm** | Latest | Kubernetes package manager |
+| **Docker Compose** | 2.40.3 | Container orchestration |
+| **Git** | Latest | Version control |
+
+### HashiCorp Tools
+| Tool | Version | Purpose |
+|------|---------|----------|
+| **Packer** | 1.14.2 | Image building |
+| **Vault** | 1.21.0 | Secrets management |
+
+### Terraform Ecosystem
+| Tool | Version | Purpose |
+|------|---------|----------|
+| **tflint** | Latest | Terraform linter |
+| **tfsec** | Latest | Security scanner |
+| **terrascan** | 1.19.9 | Policy as Code scanner |
+| **terraform-docs** | 0.20.0 | Documentation generator |
+| **tfupdate** | 0.9.2 | Version updater |
+| **checkov** | Latest | Security & compliance scanner |
+
+### Programming Languages
+| Language | Version | Purpose |
+|----------|---------|----------|
+| **Python** | 3.12 | Scripting and automation |
+| **Go** | 1.25.4 | Tool development |
+| **PowerShell** | 7.5.4 | Windows automation |
+
+### Configuration Management
+| Tool | Version | Purpose |
+|------|---------|----------|
+| **Ansible** | 2.20.0 (ansible-core) | Configuration management |
+| **pre-commit** | Latest | Git hooks framework |
+
+### Azure-Specific Tools
+| Tool | Version | Purpose |
+|------|---------|----------|
+| **kubelogin** | 0.2.12 | AKS authentication |
+| **Azure CLI Extensions** | resource-graph, containerapp | Extended Azure functionality |
+
+### Additional Utilities
+| Tool | Version | Purpose |
+|------|---------|----------|
+| **jq** | Latest | JSON processing |
+| **yq** | Latest | YAML processing |
+| **shellspec** | Latest | Shell testing framework |
+
+> **Note**: Versions marked as "Latest" are automatically updated to the most recent stable release during build.
+> Specific versions are pinned for tools that require version stability (e.g., Kubernetes ecosystem).
+
 ### Getting starter with CAF Terraform landing zones
 
 If you are reading this, you are probably interested also in reading the doc as below:

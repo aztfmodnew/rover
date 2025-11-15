@@ -52,9 +52,9 @@ RUN echo "versionRover=${versionRover}" && \
     echo "Downloading Azure devops agent version ${versionAzdo} for architecture ${TARGETARCH}..." && \
     #
     if [ ${TARGETARCH} == "amd64" ]; then \
-        AGENTURL="https://vstsagentpackage.azureedge.net/agent/${versionAzdo}/vsts-agent-linux-x64-${versionAzdo}.tar.gz" ; \
+        AGENTURL="https://download.agent.dev.azure.com/agent/${versionAzdo}/vsts-agent-linux-x64-${versionAzdo}.tar.gz" ; \
     else  \
-        AGENTURL="https://vstsagentpackage.azureedge.net/agent/${versionAzdo}/vsts-agent-linux-arm64-${versionAzdo}.tar.gz" ; \
+        AGENTURL="https://download.agent.dev.azure.com/agent/${versionAzdo}/vsts-agent-linux-arm64-${versionAzdo}.tar.gz" ; \
     fi \
     && curl -s ${AGENTURL} -o /tmp/agent_package.tar.gz && \
     tar zxvf /tmp/agent_package.tar.gz && \

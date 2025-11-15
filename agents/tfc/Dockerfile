@@ -34,7 +34,7 @@ WORKDIR /home/${USERNAME}/agent
 
 RUN echo "Installing Terraform Cloud Agents ${versionTfc}..." && \
     sudo curl -L -o /tmp/tfc-agent.zip https://releases.hashicorp.com/tfc-agent/${versionTerraformCloudAgent}/tfc-agent_${versionTerraformCloudAgent}_linux_amd64.zip 2>&1 && \
-    sudo unzip -d /usr/bin /tmp/tfc-agent.zip && \
+    sudo unzip -o -d /usr/bin /tmp/tfc-agent.zip && \
     sudo chmod +x /usr/bin/tfc-agent && \
     sudo chmod +x /usr/bin/tfc-agent-core && \
     sudo rm /tmp/tfc-agent.zip && \
