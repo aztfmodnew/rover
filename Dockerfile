@@ -105,17 +105,13 @@ RUN apt-get update && \
     #
     # Add Microsoft key and repository
     #
-    curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /tmp/microsoft.gpg && \
-    install -o root -g root -m 644 /tmp/microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
-    printf '%s\n' "deb [arch=amd64] https://packages.microsoft.com/ubuntu/22.04/prod jammy main" > /etc/apt/sources.list.d/microsoft-prod.list && \
-    rm /tmp/microsoft.gpg && \
+    curl -sSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null && \
+    echo "deb [arch=${TARGETARCH} signed-by=/etc/apt/trusted.gpg.d/microsoft.gpg] https://packages.microsoft.com/ubuntu/22.04/prod jammy main" | gosu root tee /etc/apt/sources.list.d/microsoft-prod.list && \
     #
     # Add Docker repository
     #
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor > /tmp/docker-archive-keyring.gpg && \
-    install -o root -g root -m 644 /tmp/docker-archive-keyring.gpg /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg && \
-    printf '%s\n' "deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable" > /etc/apt/sources.list.d/docker.list && \
-    rm /tmp/docker-archive-keyring.gpg && \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg && \
+    echo "deb [arch=${TARGETARCH}] https://download.docker.com/linux/ubuntu jammy stable" | gosu root tee /etc/apt/sources.list.d/docker.list && \
     #
     # Kubernetes repo
     #
@@ -136,7 +132,7 @@ RUN apt-get update && \
     #
     echo "Installing docker compose ${versionDockerCompose}..." && \
     mkdir -p /usr/libexec/docker/cli-plugins/ && \
-    if [ "${TARGETARCH}" = "amd64" ]; then \
+    if [ ${TARGETARCH} == "amd64" ]; then \
         curl -L -o /usr/libexec/docker/cli-plugins/docker-compose https://github.com/docker/compose/releases/download/v${versionDockerCompose}/docker-compose-${TARGETOS}-x86_64 ; \
     else  \
         curl -L -o /usr/libexec/docker/cli-plugins/docker-compose https://github.com/docker/compose/releases/download/v${versionDockerCompose}/docker-compose-${TARGETOS}-aarch64 ; \
@@ -157,7 +153,7 @@ RUN apt-get update && \
     # Install terrascan
     #
     echo "Installing terrascan v${versionTerrascan} ..." && \
-    if [ "${TARGETARCH}" = "amd64" ]; then \
+    if [ ${TARGETARCH} == "amd64" ]; then \
         curl -sSL -o terrascan.tar.gz https://github.com/tenable/terrascan/releases/download/v${versionTerrascan}/terrascan_${versionTerrascan}_Linux_x86_64.tar.gz ; \
     else \
         curl -sSL -o terrascan.tar.gz https://github.com/tenable/terrascan/releases/download/v${versionTerrascan}/terrascan_${versionTerrascan}_Linux_${TARGETARCH}.tar.gz ; \
@@ -168,7 +164,7 @@ RUN apt-get update && \
     # Install tfupdate
     #
     echo "Installing tfupdate v${versionTfupdate} ..." && \
-    if [ "${TARGETARCH}" = "amd64" ]; then \
+    if [ ${TARGETARCH} == "amd64" ]; then \
         curl -sSL -o tfupdate.tar.gz https://github.com/minamijoyo/tfupdate/releases/download/v${versionTfupdate}/tfupdate_${versionTfupdate}_linux_amd64.tar.gz ; \
     else \
         curl -sSL -o tfupdate.tar.gz https://github.com/minamijoyo/tfupdate/releases/download/v${versionTfupdate}/tfupdate_${versionTfupdate}_linux_${TARGETARCH}.tar.gz ; \
@@ -199,7 +195,7 @@ RUN apt-get update && \
     # https://docs.microsoft.com/en-us/powershell/scripting/install/install-other-linux?view=powershell-7.2#binary-archives
     #
     echo "Installing PowerShell ${versionPowershell}..." && \
-    if [ "${TARGETARCH}" = "amd64" ]; then curl -L -o /tmp/powershell.tar.gz https://github.com/PowerShell/PowerShell/releases/download/v${versionPowershell}/powershell-${versionPowershell}-${TARGETOS}-x64.tar.gz ; \
+    if [ ${TARGETARCH} == "amd64" ]; then curl -L -o /tmp/powershell.tar.gz https://github.com/PowerShell/PowerShell/releases/download/v${versionPowershell}/powershell-${versionPowershell}-${TARGETOS}-x64.tar.gz ; \
     else curl -L -o /tmp/powershell.tar.gz https://github.com/PowerShell/PowerShell/releases/download/v${versionPowershell}/powershell-${versionPowershell}-${TARGETOS}-${TARGETARCH}.tar.gz ; \
     fi \
     && mkdir -p /opt/microsoft/powershell/7 && \
@@ -228,7 +224,7 @@ RUN apt-get update && \
     echo "Installing Kubelogin ${versionKubelogin}..." && \
     curl -sSL -o /tmp/kubelogin.zip https://github.com/Azure/kubelogin/releases/download/v${versionKubelogin}/kubelogin-${TARGETOS}-${TARGETARCH}.zip 2>&1 && \
     unzip -d /usr/ /tmp/kubelogin.zip && \
-    if [ "${TARGETARCH}" = "amd64" ]; then \
+    if [ ${TARGETARCH} == "amd64" ]; then \
         chmod +x /usr/bin/linux_amd64/kubelogin ; \
     else \
         chmod +x /usr/bin/linux_arm64/kubelogin ; \
@@ -280,11 +276,11 @@ RUN apt-get update && \
     #
     #
     # ################ Install apt packages ##################
-    # For amd64 only - as no arm64 version packages available per:  https://packages.microsoft.com/ubuntu/22.04/prod/pool/main/m/mssql-tools/
-    if [ "${TARGETARCH}" = "amd64" ]; then \
-        ACCEPT_EULA=Y apt-get install -y --no-install-recommends unixodbc mssql-tools; \
+    # For amd64 only - as no arm64 version packages available per:  https://packages.microsoft.com/ubuntu/20.04/prod/pool/main/m/mssql-tools/
+    if [ ${TARGETARCH} == "amd64" ]; then \
+        echo ACCEPT_EULA=Y apt-get install -y --no-install-recommends unixodbc mssql-tools; \
     else \
-        echo "mssql-tools skipped as not running on arm64"; \
+        echo "mssql-tools skipped as not running on amr64"; \
     fi \
     #
     && echo "Installing latest shellspec..." && \
