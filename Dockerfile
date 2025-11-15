@@ -115,8 +115,8 @@ RUN apt-get update && \
     #
     # Kubernetes repo
     #
-    curl -fsSL --retry 3 --retry-delay 2 https://pkgs.k8s.io/core:/stable:/v${versionKubectl}/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
-    echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v${versionKubectl}/deb/ /" | gosu root tee /etc/apt/sources.list.d/kubernetes.list && \
+    #curl -fsSL --retry 3 --retry-delay 2 https://pkgs.k8s.io/core:/stable:/v${versionKubectl}/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
+    #echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v${versionKubectl}/deb/ /" | gosu root tee /etc/apt/sources.list.d/kubernetes.list && \
     #
     # Github shell
     curl -fsSL --retry 3 --retry-delay 2 https://cli.github.com/packages/githubcli-archive-keyring.gpg | gosu root dd of=/etc/apt/trusted.gpg.d/githubcli-archive-keyring.gpg && \
@@ -125,8 +125,14 @@ RUN apt-get update && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
     docker-ce-cli \
-    kubectl \
     gh && \
+    #
+    # Install kubectl directly from binary instead of apt repo
+    #
+    echo "Installing kubectl ${versionKubectl}..." && \
+    curl -LO --retry 3 --retry-delay 2 "https://dl.k8s.io/release/v${versionKubectl}/bin/${TARGETOS}/${TARGETARCH}/kubectl" && \
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl && \
+    rm kubectl && \
     #
     # Install Docker Compose - required to rebuild the rover and dynamic terminal in VSCode
     #
