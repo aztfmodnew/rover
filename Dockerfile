@@ -106,15 +106,15 @@ RUN apt-get update && \
     # Add Microsoft key and repository
     #
     curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /tmp/microsoft.gpg && \
-    gosu root install -o root -g root -m 644 /tmp/microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
-    gosu root sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/ubuntu/22.04/prod jammy main" > /etc/apt/sources.list.d/microsoft-prod.list' && \
+    install -o root -g root -m 644 /tmp/microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
+    printf '%s\n' "deb [arch=amd64] https://packages.microsoft.com/ubuntu/22.04/prod jammy main" > /etc/apt/sources.list.d/microsoft-prod.list && \
     rm /tmp/microsoft.gpg && \
     #
     # Add Docker repository
     #
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor > /tmp/docker-archive-keyring.gpg && \
-    gosu root install -o root -g root -m 644 /tmp/docker-archive-keyring.gpg /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg && \
-    gosu root sh -c 'echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable" > /etc/apt/sources.list.d/docker.list' && \
+    install -o root -g root -m 644 /tmp/docker-archive-keyring.gpg /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg && \
+    printf '%s\n' "deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable" > /etc/apt/sources.list.d/docker.list && \
     rm /tmp/docker-archive-keyring.gpg && \
     #
     # Kubernetes repo
