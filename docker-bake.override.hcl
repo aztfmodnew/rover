@@ -14,7 +14,7 @@ versionTfupdate="0.9.2"
 
 # Agents versions
 USERNAME="vscode"
-versionAzdo="3.246.0"
-versionGithubRunner="2.320.0"
-versionGitlab="17.5.3"
-versionTfc="1.17.0"
+versionAzdo="4.264.2"
+versionGithubRunner="2.329.0"
+versionGitlab="18.5.0"
+versionTfc="1.22.0"
