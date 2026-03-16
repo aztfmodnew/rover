@@ -5,12 +5,18 @@ on:
     - cron: '0 18 * * 0' # 6:00 PM UTC every Sunday (2:00 AM Singapore Time)
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   update-rover-components:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: Install Dependencies
         run: |
@@ -139,6 +145,16 @@ jobs:
           sed -i "s/versionGitlab=\"[^\"]*\"/versionGitlab=\"$versionGitlab\"/g" docker-bake.override.hcl
           sed -i "s/versionTerrascan=\"[^\"]*\"/versionTerrascan=\"$versionTerrascan\"/g" docker-bake.override.hcl
           sed -i "s/versionTfupdate=\"[^\"]*\"/versionTfupdate=\"$versionTfupdate\"/g" docker-bake.override.hcl
+
+      - name: Remove checkout GitHub credentials
+        run: |
+          git config --local --unset-all http.https://github.com/.extraheader || true
+
+          while IFS= read -r key; do
+            while IFS= read -r value; do
+              git config --local --unset "$key" "$value" || true
+            done < <(git config --local --get-all "$key" || true)
+          done < <(git config --local --name-only --get-regexp '^includeif\.gitdir:' || true)
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7.0.8
