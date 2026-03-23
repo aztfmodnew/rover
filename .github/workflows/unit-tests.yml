@@ -1,0 +1,28 @@
+name: Unit tests (ShellSpec)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/**'
+      - 'spec/**'
+  pull_request:
+    paths:
+      - 'scripts/**'
+      - 'spec/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install ShellSpec
+        run: |
+          curl -fsSL https://git.io/shellspec | sh -s -- --yes
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Run unit tests
+        run: shellspec spec/unit
