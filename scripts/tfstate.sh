@@ -465,6 +465,60 @@ function graph {
     set +e
 }
 
+function fmt {
+    echo "@calling fmt"
+
+    echo "running terraform fmt ${tf_command}"
+    echo " -TF_VAR_workspace: ${TF_VAR_workspace}"
+
+    rm -f $STDERR_FILE
+
+    terraform fmt ${tf_command} 2>$STDERR_FILE | tee ${tf_output_file}
+
+    RETURN_CODE=${PIPESTATUS[0]} && echo "Terraform fmt return code: ${RETURN_CODE}"
+
+    if [ -s $STDERR_FILE ]; then
+        if [ ${tf_output_file+x} ]; then cat $STDERR_FILE >>${tf_output_file}; fi
+        echo "Terraform returned errors:"
+        cat $STDERR_FILE
+        RETURN_CODE=2004
+    fi
+
+    if [ $RETURN_CODE != 0 ]; then
+        error ${LINENO} "Error running terraform fmt" $RETURN_CODE
+    fi
+}
+
+function force_unlock {
+    echo "@calling force_unlock"
+
+    if [ -z "${tf_command}" ]; then
+        error ${LINENO} "force-unlock requires a lock ID. Pass it as an extra argument (e.g. rover -lz [lz] -a force-unlock -- LOCK_ID)." 1
+    fi
+
+    echo "running terraform force-unlock ${tf_command}"
+    echo " -TF_VAR_workspace: ${TF_VAR_workspace}"
+    echo " -state: ${TF_DATA_DIR}/tfstates/${TF_VAR_level}/${TF_VAR_workspace}/${TF_VAR_tf_name}"
+
+    rm -f $STDERR_FILE
+
+    terraform force-unlock -force \
+        ${tf_command} 2>$STDERR_FILE | tee ${tf_output_file}
+
+    RETURN_CODE=${PIPESTATUS[0]} && echo "Terraform force-unlock return code: ${RETURN_CODE}"
+
+    if [ -s $STDERR_FILE ]; then
+        if [ ${tf_output_file+x} ]; then cat $STDERR_FILE >>${tf_output_file}; fi
+        echo "Terraform returned errors:"
+        cat $STDERR_FILE
+        RETURN_CODE=2005
+    fi
+
+    if [ $RETURN_CODE != 0 ]; then
+        error ${LINENO} "Error running terraform force-unlock" $RETURN_CODE
+    fi
+}
+
 function destroy {
     echo "@calling destroy $1"
 
@@ -620,7 +674,9 @@ function destroy {
 function other {
     echo "@calling other"
 
-    echo "running terraform ${tf_action} -state="${TF_DATA_DIR}/tfstates/${TF_VAR_level}/${TF_VAR_workspace}/${TF_VAR_tf_name}"  ${tf_command}"
+    echo "running terraform ${tf_action} ${tf_command}"
+    echo " -TF_VAR_workspace: ${TF_VAR_workspace}"
+    echo " -state: ${TF_DATA_DIR}/tfstates/${TF_VAR_level}/${TF_VAR_workspace}/${TF_VAR_tf_name}"
 
     rm -f $STDERR_FILE
 

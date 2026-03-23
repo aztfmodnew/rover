@@ -451,6 +451,18 @@ function deploy_landingzone {
         echo "calling graph"
         graph
         ;;
+    "fmt")
+        echo "calling fmt"
+        fmt
+        ;;
+    "force-unlock")
+        echo "calling force-unlock"
+        force_unlock
+        ;;
+    "test")
+        echo "calling test"
+        terraform_test
+        ;;
     "init")
         echo "init no-op"
         ;;
@@ -833,7 +845,7 @@ function deploy_azurerm {
                 "destroy")
                     destroy_from_remote_state
                     ;;
-                "plan"|"apply"|"validate"|"refresh"|"graph"|"import"|"output"|"taint"|"untaint"|"state list"|"state rm"|"state show"|"show")
+                "plan"|"apply"|"validate"|"refresh"|"graph"|"import"|"output"|"taint"|"untaint"|"state list"|"state rm"|"state show"|"show"|"fmt"|"force-unlock"|"test")
                     deploy_from_azurerm_state
                     ;;
                 "migrate")
