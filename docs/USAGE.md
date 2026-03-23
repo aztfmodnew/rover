@@ -25,7 +25,7 @@ Usage: rover <command> <switches>
      -d | --debug                           Show debug (verbose) logs
         | --log-severity        <degree>      This is the desired log degree. It can be set to FATAL,ERROR, WARN, INFO, DEBUG or VERBOSE         
     -lz | --landingzone                     Path to a landing zone
-     -a | --action                          Terraform action to perform (plan, apply , destroy)
+     -a | --action                          Terraform action to perform (plan, apply, destroy, validate, refresh, graph, import, output, taint, untaint, fmt, force-unlock, test, 'state list', 'state rm', 'state show', show). Note: 'test' requires Terraform >= 1.6.
      -c | --cloud                           Name of the Azure Cloud to use (AzurePublic, AzureUSGovernment, AzureChinaCloud, AzureGermanCloud) or specific AzureStack name.
    -env | --environment       <env name>    Name of the Environment to deploy.
      -l | -level              <level>       Level to associate landing zone to (0,1,2,3,4)
