@@ -19,6 +19,9 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Install Python yq (jq-compatible)
+        run: sudo pip3 install --break-system-packages yq
+
       - name: Install ShellSpec
         run: |
           curl -fsSL https://git.io/shellspec | sh -s -- --yes
@@ -27,4 +30,5 @@ jobs:
       - name: Run unit tests
         env:
           script_path: ${{ github.workspace }}/scripts
+          log_folder_path: /tmp/rover-logs
         run: shellspec spec/unit

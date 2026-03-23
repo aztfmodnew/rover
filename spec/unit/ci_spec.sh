@@ -1,4 +1,5 @@
 Describe 'ci.sh'
+  Include scripts/lib/logger.sh
   Include scripts/ci.sh
   Include scripts/functions.sh
 
