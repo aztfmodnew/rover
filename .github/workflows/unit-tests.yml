@@ -25,4 +25,6 @@ jobs:
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
       - name: Run unit tests
+        env:
+          script_path: ${{ github.workspace }}/scripts
         run: shellspec spec/unit
