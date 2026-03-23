@@ -1,11 +1,11 @@
 #!/bin/bash
 
-source /tf/rover/task.sh
-source /tf/rover/symphony_yaml.sh
+source "${script_path}/task.sh"
+source "${script_path}/symphony_yaml.sh"
 
 declare -a CI_TASK_CONFIG_FILE_LIST=()
 declare -a REGISTERED_CI_TASKS=()
-declare CI_TASK_DIR=/tf/rover/ci_tasks/
+declare CI_TASK_DIR="${script_path}/ci_tasks/"
 
 function verify_task_name(){
     local ci_task_name=$1
