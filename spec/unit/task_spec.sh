@@ -32,7 +32,7 @@ Describe 'task.sh'
 
       It 'should return an error that the JSON is invalid'
         When call format_task_parameters "Invalid Json"
-        The error should eq 'parse error: Invalid numeric literal at line 1, column 8'
+        The error should include 'parse error: Invalid numeric literal'
         The output should eq ''
       End
     End

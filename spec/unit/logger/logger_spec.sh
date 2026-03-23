@@ -20,6 +20,8 @@ Describe 'logger.sh'
     }
 
     Context "Log Path Not Set"
+      setup() { unset log_folder_path; }
+      BeforeEach 'setup'
       It 'should throw an error and not create directory'
         When call __log_init__
         The error should include 'Error line:0: message:Log folder path is not set status :1'  

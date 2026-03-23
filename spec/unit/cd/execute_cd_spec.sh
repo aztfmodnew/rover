@@ -14,6 +14,9 @@ Describe 'cd.sh'
       echo "Escape code: $1"
     }
 
+    __set_tf_log__ () { : ; }
+    __reset_log__ () { : ; }
+
     error() {
         # local parent_lineno="$1"
         # local message="$2"
