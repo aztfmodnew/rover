@@ -6,7 +6,7 @@
 ###########################################################
 # Stage 1: Base Image with System Dependencies
 ###########################################################
-FROM ubuntu:24.04 AS base
+FROM ubuntu:26.04 AS base
 
 SHELL ["/bin/bash", "-c"]
 
